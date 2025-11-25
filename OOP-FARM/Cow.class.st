@@ -1,6 +1,6 @@
 Class {
-	#name : 'MyClass',
-	#superclass : 'Object',
+	#name : 'Cow',
+	#superclass : 'DomesticAnimal',
 	#category : 'OOP-FARM',
 	#package : 'OOP-FARM'
 }
