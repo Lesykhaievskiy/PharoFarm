@@ -11,6 +11,16 @@ Class {
 	#package : 'OOP-FARM'
 }
 
+{ #category : 'accessing' }
+DomesticAnimal >> age [
+	^ age
+]
+
+{ #category : 'accessing' }
+DomesticAnimal >> age: aNumber [
+	age := aNumber
+]
+
 { #category : 'initialization' }
 DomesticAnimal >> initialize [
 	super initialize.
@@ -34,4 +44,24 @@ DomesticAnimal >> printOn: aStream [
 	aStream nextPutAll: self class name.
 	aStream nextPutAll: ': ', name asString.
 	aStream nextPutAll: ' (Age: ', age asString, ')'.
+]
+
+{ #category : 'accessing' }
+DomesticAnimal >> productivity [
+	^ productivity
+]
+
+{ #category : 'accessing' }
+DomesticAnimal >> productivity: aNumber [
+	productivity := aNumber
+]
+
+{ #category : 'accessing' }
+DomesticAnimal >> weight [
+	^ weight
+]
+
+{ #category : 'accessing' }
+DomesticAnimal >> weight: aNumber [
+	weight := aNumber
 ]
