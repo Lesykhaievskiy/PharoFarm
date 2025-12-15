@@ -16,35 +16,48 @@ Farm >> add: anAnimal [
 
 { #category : 'adding' }
 Farm >> addAnimalViaDialog [
-| choice nm ag wt prod animal |
+  | choice nm ag wt prod animal |
 
-choice := UIManager default chooseFrom: #('Cow' 'Sheep') title: 'Add animal type'.
-choice = 0 ifTrue: [ ^ nil ].  "Cancel"
+  choice := UIManager default chooseFrom: #('Cow' 'Sheep') title: 'Add animal type'.
+  (choice isNil or: [ choice = 0 ]) ifTrue: [ ^ nil ].
 
-nm := UIManager default request: 'Name?'.
-ag := (UIManager default request: 'Age (integer)?') asInteger.
-wt := (UIManager default request: 'Weight (number)?') asNumber.
-prod := (UIManager default request: 'Productivity (number)?') asNumber.
+  nm := UIManager default request: 'Name?'.
+  nm ifNil: [ ^ nil ].
 
-choice = 1 ifTrue: [
-  | fat |
-  fat := (UIManager default request: 'Milk fat (number)?') asNumber.
-  animal := Cow new.
-  animal name: nm; age: ag; weight: wt; productivity: prod.
-  "якщо в Cow нема setter milkFat:, тоді просто пропусти наступний рядок"
-  (animal respondsTo: #milkFat:) ifTrue: [ animal milkFat: fat ].
-].
+  ag := (UIManager default request: 'Age (integer)?')
+    ifNil: [ ^ nil ]
+    ifNotNil: [:s | s asInteger ].
 
-choice = 2 ifTrue: [
-  | hot |
-  hot := UIManager default chooseFrom: #('No' 'Yes') title: 'Hot summer?'.
-  animal := Sheep new.
-  animal name: nm; age: ag; weight: wt; productivity: prod.
-  animal isHotSummer: (hot = 2).
-].
+  wt := (UIManager default request: 'Weight (number)?')
+    ifNil: [ ^ nil ]
+    ifNotNil: [:s | s asNumber ].
 
-self add: animal.
-^ animal
+  prod := (UIManager default request: 'Productivity (number)?')
+    ifNil: [ ^ nil ]
+    ifNotNil: [:s | s asNumber ].
+
+  choice = 1 ifTrue: [
+    | fat |
+    fat := (UIManager default request: 'Milk fat (number)?')
+      ifNil: [ ^ nil ]
+      ifNotNil: [:s | s asNumber ].
+    animal := Cow new.
+    animal name: nm; age: ag; weight: wt; productivity: prod.
+    (animal respondsTo: #milkFat:) ifTrue: [ animal milkFat: fat ].
+  ].
+
+  choice = 2 ifTrue: [
+    | hot |
+    hot := UIManager default chooseFrom: #('No' 'Yes') title: 'Hot summer?'.
+    (hot isNil or: [ hot = 0 ]) ifTrue: [ ^ nil ].
+    animal := Sheep new.
+    animal name: nm; age: ag; weight: wt; productivity: prod.
+    animal isHotSummer: (hot = 2).
+  ].
+
+  animal ifNil: [ ^ nil ].
+  self add: animal.
+  ^ animal
 
 ]
 
