@@ -99,6 +99,12 @@ Farm >> printOn: aStream [
 
 ]
 
+{ #category : 'removing' }
+Farm >> remove: anAnimal [
+	"Видаляє тварину зі списку, якщо вона там є"
+	animals remove: anAnimal
+]
+
 { #category : 'as yet unclassified' }
 Farm >> saveAnimalsToFileNamed: fileNameString [
   | file |

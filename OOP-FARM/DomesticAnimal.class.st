@@ -23,6 +23,17 @@ DomesticAnimal >> <= anotherAnimal [
 	^ self calculateProfit <= anotherAnimal calculateProfit
 ]
 
+{ #category : 'comparing' }
+DomesticAnimal >> = anObject [
+	"Порівнюємо, чи це той самий об'єкт, або чи збігаються їх дані"
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	
+	^ name = anObject name 
+		and: [ age = anObject age 
+		and: [ weight = anObject weight ] ]
+]
+
 { #category : 'accessing' }
 DomesticAnimal >> age [
 	^ age
@@ -31,6 +42,12 @@ DomesticAnimal >> age [
 { #category : 'accessing' }
 DomesticAnimal >> age: aNumber [
 	age := aNumber
+]
+
+{ #category : 'comparing' }
+DomesticAnimal >> hash [
+	"Унікальний код об'єкта на основі імені та віку"
+	^ name hash bitXor: age hash
 ]
 
 { #category : 'initialization' }
